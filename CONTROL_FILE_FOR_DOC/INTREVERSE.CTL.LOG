@@ -1,0 +1,53 @@
+
+SQL*Loader: Release 11.2.0.2.0 - Production on Wed Mar 21 10:01:43 2018
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+Control File:   C:\JUNK\INTREVERSE.CTL
+Data File:      C:\JUNK\INTREVERSE.CTL
+  Bad File:     C:\JUNK\INTREVERSE.bad
+  Discard File:  none specified
+ 
+ (Allow all discards)
+
+Number to load: ALL
+Number to skip: 0
+Errors allowed: 50
+Bind array:     64 rows, maximum of 256000 bytes
+Continuation:    none specified
+Path used:      Conventional
+
+Table UPLOAD_TABLE, loaded from every logical record.
+Insert option in effect for this table: APPEND
+TRAILING NULLCOLS option in effect
+
+   Column Name                  Position   Len  Term Encl Datatype
+------------------------------ ---------- ----- ---- ---- ---------------------
+DATE_TIME                           FIRST     *   ~       CHARACTER            
+POLLUTANT                            NEXT     *   ~       CHARACTER            
+UNIT                                 NEXT     *   ~       CHARACTER            
+STATION                              NEXT     *   ~       CHARACTER            
+INSTRUMENT                           NEXT     *   ~       CHARACTER            
+AVERAGE                              NEXT     *   ~       CHARACTER            
+
+
+Table UPLOAD_TABLE:
+  68024 Rows successfully loaded.
+  0 Rows not loaded due to data errors.
+  0 Rows not loaded because all WHEN clauses were failed.
+  0 Rows not loaded because all fields were null.
+
+
+Space allocated for bind array:                  99072 bytes(64 rows)
+Read   buffer bytes: 1048576
+
+Total logical records skipped:          0
+Total logical records read:         68024
+Total logical records rejected:         0
+Total logical records discarded:        0
+
+Run began on Wed Mar 21 10:01:43 2018
+Run ended on Wed Mar 21 10:01:48 2018
+
+Elapsed time was:     00:00:05.07
+CPU time was:         00:00:00.77
