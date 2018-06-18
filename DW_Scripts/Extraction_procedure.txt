@@ -1,0 +1,64 @@
+Sub Oracle_Upload()
+
+    Dim outfile As String, Tab_Name As String
+    Dim Outchan As Long
+    Dim Fld_List As String, data_list As String
+    Dim cur_cell As Long, Tot_flds As Long, Cur_Row As Long
+    Dim Cur_Col As String
+    Dim n1 As Long
+    Dim n2 As Long
+    
+    
+    outfile = InputBox("Name of file to upload", "Upload to Oracle", "C:\JUNK\INTREVERSE.CTL")
+    
+    Outchan = FreeFile() ' BBX UNT
+    
+    'On Error GoTo bad_file
+    Open outfile For Output As Outchan
+    
+    Print #Outchan, "LOAD DATA"
+    Print #Outchan, "INFILE *"
+    Tab_Name = UCase$(Range("A1").Value)
+    MsgBox Tab_Name
+    Print #Outchan, "APPEND"
+    Print #Outchan, "INTO TABLE " & Tab_Name
+    Print #Outchan, "Fields terminated by '~'"
+    Print #Outchan, "Trailing Nullcols"
+    Fld_List = "("
+    
+    cur_cell = 1
+    While Len(LTrim(RTrim(Cells(2, cur_cell).Value))) <> 0
+        If cur_cell > 1 Then
+            Fld_List = Fld_List & ","
+        End If
+        Fld_List = Fld_List & UCase$(LTrim(RTrim(Cells(2, cur_cell).Value)))
+        cur_cell = cur_cell + 1
+    Wend
+    Fld_List = Fld_List + ")"
+    Print #Outchan, Fld_List
+    Print #Outchan, "BEGINDATA"
+    Tot_flds = cur_cell - 1
+    MsgBox "Total Fields = " & Tot_flds
+    
+    Cur_Row = 3
+    cur_cell = 1
+   
+    While Cells(Cur_Row, cur_cell).Value <> "~~END~~"
+        data_list = Cells(Cur_Row, cur_cell).Text 'Range(Cur_Col).Value
+        For cur_cell = 2 To Tot_flds
+            data_list = data_list + "~" & LTrim(RTrim(Cells(Cur_Row, cur_cell).Text))
+        Next
+        Print #Outchan, data_list
+        Cur_Row = Cur_Row + 1
+        cur_cell = 1
+    Wend
+     MsgBox "NuMber of row = " & Cur_Row
+    
+    Close Outchan
+    
+    MsgBox "Will now Load Data"
+    
+    Shell ("SQLLDR USERID=dwuser/dwuser@XE CONTROL=" & outfile & " LOG=" & outfile & ".LOG")
+
+    MsgBox " Done all   "
+End Sub
